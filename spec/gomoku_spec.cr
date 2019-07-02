@@ -9,7 +9,7 @@ describe Gomoku do
 
   it "build" do
     10.times do
-      Gomoku::Builder.new(10).make.print
+      Gomoku::Builder.new(7).make.print
       sleep 1
     end
   end

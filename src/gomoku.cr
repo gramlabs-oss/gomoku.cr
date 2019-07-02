@@ -98,6 +98,8 @@ module Gomoku
         {0, 0}
       end
 
+      white_optional_area = Array(Array(Int32)).new
+
       @board.each_with_index do |row, y|
         row.each_with_index do |cell, x|
           case @direction
@@ -126,7 +128,16 @@ module Gomoku
               end
             end
           end
+          if @board[y][x] == CellColor::None && y != @victory_coords[0] && x != @victory_coords[1] # 可生成白棋的位置
+            white_optional_area.push([y, x])
+          end
         end
+      end
+
+      # 生成白色棋子
+      3.times.each do
+        white_interference = white_optional_area.delete_at Random.rand(0...white_optional_area.size)
+        @board[white_interference[0]][white_interference[1]] = CellColor::White
       end
       self
     end
