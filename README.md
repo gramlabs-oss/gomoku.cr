@@ -9,7 +9,7 @@ TODO: Write a description here
    ```yaml
    dependencies:
      gomoku:
-       github: your-github-user/gomoku
+       github: Hentioe/gomoku.cr
    ```
 
 2. Run `shards install`
@@ -18,6 +18,11 @@ TODO: Write a description here
 
 ```crystal
 require "gomoku"
+
+# Generate a 15x15 board
+gomoku = Gomoku::Builder.new(15).make
+# The coordinates of victory
+gomoku.victory_coords # [y, x]
 ```
 
 TODO: Write usage instructions here
@@ -36,4 +41,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [Hentioe_Cl](https://github.com/your-github-user) - creator and maintainer
+- [Hentioe](https://github.com/Hentioe) - creator and maintainer
