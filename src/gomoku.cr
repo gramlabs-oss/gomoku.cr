@@ -7,6 +7,7 @@ module Gomoku
   # 五子棋棋局生成器
   class Builder
     getter victory_coords : Array(Int32)
+    getter board : Array(Array(CellColor))
 
     def initialize(@size : Int = 15)
       # 生成二维棋盘
