@@ -8,6 +8,7 @@ module Gomoku
   class Builder
     getter victory_coords : Array(Int32)
     getter board : Array(Array(CellColor))
+    getter is_aside : Bool = false
 
     def initialize(@size : Int = 15)
       # 生成二维棋盘
@@ -58,6 +59,7 @@ module Gomoku
           @board[white_c[0]][white_c[1]] = CellColor::White
           @victory_coords = double_victory_c[victory_n]
         else
+          @is_aside = true
           @victory_coords = [y_seed - 4, x_seed] if y_seed == (@size - 1)
           @victory_coords = [y_seed + 1, x_seed] if (y_seed - 4) == 0
         end
@@ -69,6 +71,7 @@ module Gomoku
           @board[white_c[0]][white_c[1]] = CellColor::White
           @victory_coords = double_victory_c[victory_n]
         else
+          @is_aside = true
           @victory_coords = [y_seed + 4, x_seed] if y_seed == 0
           @victory_coords = [y_seed - 1, x_seed] if (y_seed + 4) == (@size - 1)
         end
@@ -80,6 +83,7 @@ module Gomoku
           @board[white_c[0]][white_c[1]] = CellColor::White
           @victory_coords = double_victory_c[victory_n]
         else
+          @is_aside = true
           @victory_coords = [y_seed, x_seed - 4] if x_seed == (@size - 1)
           @victory_coords = [y_seed, x_seed + 1] if (x_seed - 4) == 0
         end
@@ -91,6 +95,7 @@ module Gomoku
           @board[white_c[0]][white_c[1]] = CellColor::White
           @victory_coords = double_victory_c[victory_n]
         else
+          @is_aside = true
           @victory_coords = [y_seed, x_seed + 4] if x_seed == 0
           @victory_coords = [y_seed, x_seed - 1] if (x_seed + 4) == (@size - 1)
         end
@@ -135,10 +140,18 @@ module Gomoku
       end
 
       # 生成白色棋子
-      3.times.each do
+      white_count = @is_aside ? 7 : 6
+      white_count.times.each do
         white_interference = white_optional_area.delete_at Random.rand(0...white_optional_area.size)
         @board[white_interference[0]][white_interference[1]] = CellColor::White
       end
+
+      # 生成黑色棋子
+      3.times.each do
+        white_interference = white_optional_area.delete_at Random.rand(0...white_optional_area.size)
+        @board[white_interference[0]][white_interference[1]] = CellColor::Black
+      end
+
       self
     end
 
